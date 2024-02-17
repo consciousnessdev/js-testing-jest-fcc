@@ -73,3 +73,36 @@ const { sum, myFunction, fetchData, fetchPromise } = require("./sum");
 //   const data = await fetchPromise();
 //   expect(data).toBe("peanut butter");
 // });
+
+// jest mock func
+// test("mock implementation of a basic function", () => {
+//   // mocking function
+//   const mock = jest.fn((x) => 42 + x);
+//   expect(mock(1)).toEqual(43);
+
+//   // toHaveBeenCalledWith is ensure that a mock function was called with specific arguments
+//   // so return of expected mock function will re-ensure
+//   expect(mock).toHaveBeenCalledWith(1);
+// });
+
+// jest spies func
+test("spying on a method of an object", () => {
+  const video = {
+    play() {
+      return true;
+    },
+  };
+
+  // spyOn are similar to jest.fn but also tracks calls to object[methodName]
+  const spy = jest.spyOn(video, "play");
+  video.play();
+
+  // toHaveBeenCalled are ensure that a mock fn are called
+  expect(spy).toHaveBeenCalled();
+
+  // mockRestore are restore of original non-mocked function implementation,
+  // if function has spied use spyOn, mocked function can changed by mock
+  // method such as mockReturnValue(params) etc, so it must me restore into
+  // original function  
+  spy.mockRestore();
+});
